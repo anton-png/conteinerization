@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db1-pgsql-gb
+  labels:
+    app.db: db1-pgsql-gb
+    #app.kubernetes.io/name: db1-pgsql-gb
+    #app.kubernetes.io/instance: postgres:10.13
+    #app.kubernetes.io/version: "10.13"
+    #app.kubernetes.io/component: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.db: db1-pgsql-gb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.db: db1-pgsql-gb
+    spec:
+      containers:
+        - image: postgres:10.13
+          name: db1-pgsql-gb-1
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: db-env
+            - secretRef:
+                name: db-secret-env
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: db-data
+      volumes:
+        - name: db-data
+          persistentVolumeClaim:
+            claimName: pvc-db1-pgsql-gb-10gi-claim
+        

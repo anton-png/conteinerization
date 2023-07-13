@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-db1-pgsql-gb
+  labels:
+    app.db: db1-pgsql-gb
+spec:
+  type: NodePort
+  ports:
+    - port: 5432
+  # Pod to route service traffic  
+  selector:
+    app.db: db1-pgsql-gb
