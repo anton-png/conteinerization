@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: gb
+  name: db1-pgsql-gb
+  labels:
+    app.gb: psql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.gb: psql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.gb: psql
+    spec:
+      containers:
+        - image: postgres:10.13
+          name: pgsql-gb-1
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: db-env
+            - secretRef:
+                name: db-secret-env
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: db-data
+      volumes:
+        - name: db-data
+          persistentVolumeClaim:
+            claimName: pvc-pgsql-gb-10gi
+        

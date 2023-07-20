@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  namespace: gb
+  name: pv-pgsql-gb-10gi
+  labels:
+    type: local
+    app.gb: psql
+spec:
+  storageClassName: csi-ceph-hdd-gz1  #-retain
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  # Specify the path to persistent the volumes  
+  hostPath:
+    path: "/data/db"

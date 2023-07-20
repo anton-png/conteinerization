@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: redmine-ingress
+  namespace: gb
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  #ingressClassName: nginx
+  rules:
+  - host: redmine.84.23.55.117.nip.io     
+    http:
+      paths:
+        - path: /(.*)
+          pathType: Prefix
+          backend: 
+            service:
+              name: redmine
+              port:
+                number: 3000

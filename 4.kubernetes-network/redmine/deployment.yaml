@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: gb
+  name: redmine
+  labels:
+    app.gb: redmine
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.gb: redmine
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.gb: redmine
+    spec:
+      containers:
+        - image: redmine:4.1.1
+          name: redmine
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: redmine-env
+            - secretRef:
+                name: redmine-secret-env
+          resources:
+            limits:
+              cpu: 500m
+              memory: 256Mi
+
+          

@@ -1,0 +1,8 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gb
+  labels:
+    app.gb: psql
+    app.gb: redmine

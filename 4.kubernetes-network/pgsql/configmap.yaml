@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: gb
+  name: db-env
+  labels:
+    app.gb: psql
+data:
+  POSTGRES_USER: testuser
+  POSTGRES_DB: testdatabase
+  PGDATA: /var/lib/postgresql/data/pgdata

@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: gb
+  name: pvc-pgsql-gb-10gi
+  labels:
+    app.gb: psql
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: csi-ceph-hdd-gz1-retain
+  resources:
+    requests:
+      storage: 10Gi

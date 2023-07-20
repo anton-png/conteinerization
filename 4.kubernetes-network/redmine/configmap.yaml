@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: gb
+  name: redmine-env
+  labels:
+    app.gb: redmine
+data:
+  REDMINE_DB_POSTGRES: database 
+  REDMINE_DB_USERNAME: testuser 
+  REDMINE_DB_DATABASE: testdatabase
